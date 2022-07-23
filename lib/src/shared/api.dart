@@ -12,4 +12,22 @@ class TodoListApi {
         host: ApiConstants.baseUrl,
         path: "${ApiConstants.path}${ApiConstants.epGetDone}",
       );
+
+  Uri addList() => Uri(
+        scheme: "https",
+        host: ApiConstants.baseUrl,
+        path: "${ApiConstants.path}${ApiConstants.epAdd}",
+      );
+
+  Uri updateDone(int id) => Uri(
+        scheme: "https",
+        host: ApiConstants.baseUrl,
+        path: "${ApiConstants.path}${ApiConstants.epUpdateDone}/$id",
+      );
+
+  Uri updateNotYet(int id) => Uri(
+        scheme: "https",
+        host: ApiConstants.baseUrl,
+        path: "${ApiConstants.path}${ApiConstants.epUpdateNotYet}/$id",
+      );
 }

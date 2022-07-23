@@ -3,13 +3,13 @@ class ReqRes {
 
   final String status;
   final String message;
-  final DataRes data;
+  final DataRes? data;
 
   factory ReqRes.fromJson(Map<String, dynamic> json) {
     return ReqRes(
       status: json['status'] as String,
       message: json['message'] ?? "",
-      data: DataRes.fromJson(json['data']),
+      data: json['data'] == null ? null : DataRes.fromJson(json['data']),
     );
   }
 }
@@ -47,7 +47,6 @@ class Todo {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'status': status,
       'todo_text': todoText,
       'belong_to': belongTo,

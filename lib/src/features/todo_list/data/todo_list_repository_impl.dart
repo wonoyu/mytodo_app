@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mytodo_app/src/features/todo_list/domain/todo_list_model.dart';
 import 'package:mytodo_app/src/features/todo_list/domain/todo_list_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:mytodo_app/src/shared/api.dart';
+import 'package:mytodo_app/src/shared/providers.dart';
 
 class TodoListRepositoryImpl implements TodoListRepository {
   TodoListRepositoryImpl({required this.client, required this.api});
@@ -18,7 +20,7 @@ class TodoListRepositoryImpl implements TodoListRepository {
     final todosNotYet = result[0] as List<Todo>;
     final response = result[1] as http.Response;
     final responseBody = ReqRes.fromJson(json.decode(response.body));
-    todosNotYet.addAll(responseBody.data.todo);
+    todosNotYet.addAll(responseBody.data!.todo);
     return todosNotYet;
   }
 
@@ -26,6 +28,12 @@ class TodoListRepositoryImpl implements TodoListRepository {
   Future<List<Todo>> getTodoListNotYet() async {
     final response = await client.get(api.listNotYet());
     final responseBody = ReqRes.fromJson(json.decode(response.body));
-    return responseBody.data.todo;
+    return responseBody.data!.todo;
   }
 }
+
+final todoListRepositoryImplProvider = Provider<TodoListRepository>((ref) {
+  final client = ref.read(httpClientProvider);
+  final api = ref.read(todoListApiProvider);
+  return TodoListRepositoryImpl(client: client, api: api);
+});

@@ -5,13 +5,12 @@ import 'package:mytodo_app/src/features/todo_list/domain/todo_list_repository.da
 class TodoListController extends StateNotifier<AsyncValue<List<Todo>>> {
   TodoListController({required this.todoListRepository})
       : super(const AsyncValue.loading()) {
-    _getTodoList();
+    getTodoList();
   }
 
   final TodoListRepository todoListRepository;
 
-  Future<void> _getTodoList() async {
-    print("terpanggil");
+  Future<void> getTodoList() async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(todoListRepository.getTodoListDone);
   }

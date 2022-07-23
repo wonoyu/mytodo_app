@@ -34,6 +34,11 @@ ThemeData _themeData() {
       elevation: 0.0,
       color: AppColors.secondaryBlue,
     ),
+    snackBarTheme: base.snackBarTheme.copyWith(
+        shape: ContinuousRectangleBorder(
+            borderRadius: BorderRadius.circular(60.0)),
+        backgroundColor: AppColors.tertiaryPink,
+        behavior: SnackBarBehavior.fixed),
     listTileTheme: base.listTileTheme.copyWith(
         tileColor: AppColors.primaryBlue,
         textColor: AppColors.primaryWhite,
