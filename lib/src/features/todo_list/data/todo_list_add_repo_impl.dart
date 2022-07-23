@@ -31,6 +31,19 @@ class TodoListAddRepoImpl implements TodoListAddRepo {
     final response = await client.post(api.updateNotYet(id));
     return ReqRes.fromJson(json.decode(response.body));
   }
+
+  @override
+  Future<ReqRes> deleteTodo(int id) async {
+    final response = await client.post(api.deleteTodo(id));
+    return ReqRes.fromJson(json.decode(response.body));
+  }
+
+  @override
+  Future<ReqRes> updateTodo(String text, int id) async {
+    final response =
+        await client.post(api.updateTextTodo(id), body: {'todo_text': text});
+    return ReqRes.fromJson(json.decode(response.body));
+  }
 }
 
 final todoListAddRepoImplProvider = Provider<TodoListAddRepo>((ref) {

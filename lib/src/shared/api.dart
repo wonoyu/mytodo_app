@@ -30,4 +30,16 @@ class TodoListApi {
         host: ApiConstants.baseUrl,
         path: "${ApiConstants.path}${ApiConstants.epUpdateNotYet}/$id",
       );
+
+  Uri deleteTodo(int id) => Uri(
+        scheme: "https",
+        host: ApiConstants.baseUrl,
+        path: "${ApiConstants.path}${ApiConstants.epDelete}/$id",
+      );
+
+  Uri updateTextTodo(int id) => Uri(
+        scheme: "https",
+        host: ApiConstants.baseUrl,
+        path: "${ApiConstants.path}${ApiConstants.epUpdate}/$id",
+      );
 }

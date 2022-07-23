@@ -6,4 +6,6 @@ class ApiConstants {
   static const epAdd = "/create";
   static const epUpdateDone = "/set-done";
   static const epUpdateNotYet = "/set-not-yet";
+  static const epDelete = "/delete";
+  static const epUpdate = "/update";
 }

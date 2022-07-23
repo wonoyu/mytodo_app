@@ -24,6 +24,16 @@ class TodoListAddController extends StateNotifier<AsyncValue<ReqRes?>> {
     state =
         await AsyncValue.guard(() => todoListAddRepo.updateTodoListNotYet(id));
   }
+
+  Future<void> deleteTodo(int id) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() => todoListAddRepo.deleteTodo(id));
+  }
+
+  Future<void> updateTodoText(String text, int id) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() => todoListAddRepo.updateTodo(text, id));
+  }
 }
 
 final todoListAddControllerProvider = StateNotifierProvider.autoDispose<

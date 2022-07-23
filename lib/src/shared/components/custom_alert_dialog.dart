@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mytodo_app/src/constants/colors.dart';
 import 'package:mytodo_app/src/features/todo_list/domain/todo_list_model.dart';
+import 'package:mytodo_app/src/features/username_auth/presentation/username_auth_controller.dart';
 
 class CustomAlertDialog extends ConsumerStatefulWidget {
   const CustomAlertDialog({
@@ -23,6 +24,7 @@ class _CustomAlertDialogState extends ConsumerState<CustomAlertDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final usernameState = ref.watch(usernameAuthControllerProvider);
     return AlertDialog(
       title: Text(widget.title),
       content: Column(
@@ -79,7 +81,7 @@ class _CustomAlertDialogState extends ConsumerState<CustomAlertDialog> {
                             status: _markAsDone ? "done" : "not yet",
                             todoText: _textController.text,
                             id: 0,
-                            belongTo: "kaka 6"));
+                            belongTo: usernameState.asData?.value ?? "User"));
                   }
                 },
                 child: const Text("OK"))

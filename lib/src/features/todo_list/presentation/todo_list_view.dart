@@ -4,6 +4,8 @@ import 'package:mytodo_app/src/constants/colors.dart';
 import 'package:mytodo_app/src/features/todo_list/domain/todo_list_model.dart';
 import 'package:mytodo_app/src/features/todo_list/presentation/todo_list_add_controller.dart';
 import 'package:mytodo_app/src/features/todo_list/presentation/todo_list_controller.dart';
+import 'package:mytodo_app/src/features/todo_list/presentation/todo_list_delete_button.dart';
+import 'package:mytodo_app/src/features/todo_list/presentation/todo_list_update_button.dart';
 import '../../../shared/extension_async_value.dart';
 
 class TodoListView extends ConsumerWidget {
@@ -16,7 +18,6 @@ class TodoListView extends ConsumerWidget {
     ref.listen<AsyncValue>(todoListAddControllerProvider,
         (_, state) => state.updateTodoSnackbar(context, ref));
     final controller = ref.watch(todoListControllerProvider);
-    final controllerAdd = ref.watch(todoListAddControllerProvider);
     return controller.when(
       data: (data) {
         return ListView.builder(
@@ -62,11 +63,34 @@ class ListViewContent extends StatelessWidget {
             color: Color(0xffb00bc3),
           ),
           contentPadding: const EdgeInsets.all(4.0),
-          title: Text(
-            data[index].todoText,
-            style: TextStyle(
-                decoration:
-                    status ? TextDecoration.lineThrough : TextDecoration.none),
+          title: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: Text(
+                  data[index].todoText,
+                  style: TextStyle(
+                      overflow: TextOverflow.fade,
+                      decoration: status
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Wrap(
+                  spacing: 8.0,
+                  children: [
+                    TodoListUpdateButton(
+                      id: data[index].id,
+                      textToEdit: data[index].todoText,
+                    ),
+                    TodoListDeleteButton(id: data[index].id),
+                  ],
+                ),
+              ),
+            ],
           ),
           controlAffinity: ListTileControlAffinity.leading,
           activeColor: status ? AppColors.anotherBlue : AppColors.primaryPink,
