@@ -9,10 +9,23 @@ class TodoListController extends StateNotifier<AsyncValue<List<Todo>>> {
   }
 
   final TodoListRepository todoListRepository;
+  List<Todo> _unfiltered = [];
 
   Future<void> getTodoList() async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(todoListRepository.getTodoListDone);
+    _unfiltered = state.asData!.value;
+  }
+
+  void searchTodoList(String keyword) {
+    if (state.asData == null) return;
+    final todoList = _unfiltered;
+    state =
+        AsyncValue.data(todoListRepository.searchTodoList(todoList, keyword));
+  }
+
+  void cancelSearch() {
+    state = AsyncValue.data(_unfiltered);
   }
 }
 

@@ -15,7 +15,8 @@ class TodoListAddRepoImpl implements TodoListAddRepo {
 
   @override
   Future<ReqRes> addTodoList(Todo todo) async {
-    final response = await client.post(api.addList(), body: json.encode(todo));
+    final jsonTodo = todo.toJson();
+    final response = await client.post(api.addList(), body: jsonTodo);
     return ReqRes.fromJson(json.decode(response.body));
   }
 

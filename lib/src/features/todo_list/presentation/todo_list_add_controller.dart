@@ -14,14 +14,12 @@ class TodoListAddController extends StateNotifier<AsyncValue<ReqRes?>> {
   }
 
   Future<void> updateTodoDone(int id) async {
-    print("terpanggil");
     state = const AsyncValue.loading();
     state =
         await AsyncValue.guard(() => todoListAddRepo.updateTodoListDone(id));
   }
 
   Future<void> updateTodoNotYet(int id) async {
-    print("terpanggil");
     state = const AsyncValue.loading();
     state =
         await AsyncValue.guard(() => todoListAddRepo.updateTodoListNotYet(id));

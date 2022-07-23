@@ -5,7 +5,6 @@ import 'package:mytodo_app/src/features/todo_list/presentation/todo_list_control
 
 extension AsyncValueUI on AsyncValue {
   void updateTodoSnackbar(BuildContext context, WidgetRef ref) {
-    print("kepanggil");
     whenOrNull(data: (data) {
       if (data == null) return null;
       final stateData = data as ReqRes;

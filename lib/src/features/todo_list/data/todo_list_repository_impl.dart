@@ -30,6 +30,12 @@ class TodoListRepositoryImpl implements TodoListRepository {
     final responseBody = ReqRes.fromJson(json.decode(response.body));
     return responseBody.data!.todo;
   }
+
+  @override
+  List<Todo> searchTodoList(List<Todo> todoList, String keyword) {
+    return List<Todo>.from(todoList.where((element) =>
+        element.todoText.toLowerCase().contains(keyword.toLowerCase())));
+  }
 }
 
 final todoListRepositoryImplProvider = Provider<TodoListRepository>((ref) {
