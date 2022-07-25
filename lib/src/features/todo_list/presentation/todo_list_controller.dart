@@ -13,8 +13,12 @@ class TodoListController extends StateNotifier<AsyncValue<List<Todo>>> {
 
   Future<void> getTodoList() async {
     state = const AsyncValue.loading();
-    state = await AsyncValue.guard(todoListRepository.getTodoListDone);
-    _unfiltered = state.asData!.value;
+    final data = await AsyncValue.guard(todoListRepository.getTodoListDone);
+    if (data.asData!.value.length > _unfiltered.length) {
+      _unfiltered = data.asData!.value;
+      state = AsyncValue.data(_unfiltered);
+    }
+    state = AsyncValue.data(data.asData!.value);
   }
 
   void searchTodoList(String keyword) {
@@ -26,6 +30,13 @@ class TodoListController extends StateNotifier<AsyncValue<List<Todo>>> {
 
   void cancelSearch() {
     state = AsyncValue.data(_unfiltered);
+  }
+
+  void reorderTodos(int oldIndex, int newIndex) {
+    List<Todo> stateData = state.asData!.value;
+    final element = stateData.removeAt(oldIndex);
+    stateData.insert(newIndex, element);
+    state = AsyncValue.data(stateData);
   }
 }
 
